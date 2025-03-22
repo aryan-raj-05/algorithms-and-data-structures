@@ -4,20 +4,58 @@
 using std::vector;
 template <typename T> using matrix = vector<vector<T>>;
 
-namespace strasn {
-	template<typename T> matrix<T> strassenMatMul(const matrix<T>& X, const matrix<T>& Y);
-	template<typename T> matrix<T> addMat(const matrix<T> &A, const matrix<T> &B, int sign = 1);
+// prints matrix of any type
+template <typename T>
+void printMatrix(const matrix<T>& A) {
+	for (const auto& row : A) {
+		for (const auto& val : row) {
+			std::cout << val << " ";
+		}
+		std::cout << std::endl;
+	}
 }
 
 namespace naive {
-	template <typename T> matrix<T> defMul(const matrix<T>& A, const matrix<T>& B);
-	template <typename T> vector<int> orderMat(const matrix<T>& A);
-}
+	// returns the order of the matrix
+	// if the matrix is invalid or empty, it returns {-1, -1}
+	template <typename T>
+	vector<int> orderMat(const matrix<T>& A) {
+		if (A.empty())	return {-1, -1};
 
-template <typename T> void printMatrix(const matrix<T>& A);
+		int a = static_cast<int>(A.size());
+		int b = static_cast<int>(A[0].size());
 
-int main() {
-	
+		for(const auto& x : A) {
+			if (static_cast<int>(x.size()) != b) {
+				return {-1, -1};
+			}
+		}
+
+		return {a, b};
+	}
+
+	// matrix multiplication as per the definition,
+	// row by column method
+	template <typename T>
+	matrix<T> defMul(const matrix<T>& A, const matrix<T>& B) {
+		vector<int> ordA = orderMat(A); // [m x n]
+		vector<int> ordB = orderMat(B); // [n x p]
+
+		if (ordA[1] != ordB[0] || ordA[1] == -1 || ordB[1] == -1) {
+			std::cerr << "Multiplication is not defined\n";
+			return {};
+		}
+
+		int m = ordA[0], n = ordA[1], p = ordB[1];
+		matrix<T> C(m, vector<T>(p, 0));
+
+		for (int i = 0; i < m; i++)
+			for (int j = 0; j < p; j++)
+				for (int k = 0; k < n; k++)
+					C[i][j] += A[i][k] * B[k][j];
+
+		return C;
+	}
 }
 
 namespace strasn {
@@ -45,6 +83,19 @@ namespace strasn {
 		  [P3 + P4              P1 + P5 - P3 - P7]
 
 	*/
+
+	// adds two square matrices of same order
+	template<typename T>
+	matrix<T> addMat(const matrix<T> &A, const matrix<T> &B, int sign = 1) {
+		// assume that input is valid and both are square matrices
+		int n = static_cast<int>(A.size());
+		matrix<T> C(n, vector<T>(n));
+		for(int i = 0; i < n; i++)
+			for(int j = 0; j < n; j++)
+				C[i][j] = A[i][j] + sign * B[i][j];
+		return C;
+	}
+
 	template<typename T> 
 	matrix<T> strassenMatMul(const matrix<T>& X, const matrix<T>& Y) {
 		// for simplicity order of both A and B will be assumed as n x n
@@ -97,72 +148,8 @@ namespace strasn {
 
 		return res;
 	}
-
-	// adds two square matrices of same order
-	template<typename T>
-	matrix<T> addMat(const matrix<T> &A, const matrix<T> &B, int sign) {
-		// assume that input is valid and both are square matrices
-		int n = static_cast<int>(A.size());
-		matrix<T> C(n, vector<T>(n));
-		for(int i = 0; i < n; i++)
-			for(int j = 0; j < n; j++)
-				C[i][j] = A[i][j] + sign * B[i][j];
-		return C;
-	}
 }
 
+int main() {
 
-namespace naive {
-	// matrix multiplication as per the definition,
-	// row by column method
-	template <typename T>
-	matrix<T> defMul(const matrix<T>& A, const matrix<T>& B) {
-		vector<int> ordA = orderMat(A); // [m x n]
-		vector<int> ordB = orderMat(B); // [n x p]
-
-		if (ordA[1] != ordB[0] || ordA[1] == -1 || ordB[1] == -1) {
-			std::cerr << "Multiplication is not defined\n";
-			return {};
-		}
-
-		int m = ordA[0], n = ordA[1], p = ordB[1];
-		matrix<T> C(m, vector<T>(p, 0));
-
-		for (int i = 0; i < m; i++)
-			for (int j = 0; j < p; j++)
-				for (int k = 0; k < n; k++)
-					C[i][j] += A[i][k] * B[k][j];
-
-		return C;
-	}
-
-	// returns the order of the matrix
-	// if the matrix is invalid or empty, it returns {-1, -1}
-	template <typename T>
-	vector<int> orderMat(const matrix<T>& A) {
-		if (A.empty())	return {-1, -1};
-
-		int a = static_cast<int>(A.size());
-		int b = static_cast<int>(A[0].size());
-
-		for(const auto& x : A) {
-			if (static_cast<int>(x.size()) != b) {
-				return {-1, -1};
-			}
-		}
-
-		return {a, b};
-	}
-}
-
-
-// prints matrix of any type
-template <typename T>
-void printMatrix(const matrix<T>& A) {
-	for (const auto& row : A) {
-		for (const auto& val : row) {
-			std::cout << val << " ";
-		}
-		std::cout << std::endl;
-	}
 }
