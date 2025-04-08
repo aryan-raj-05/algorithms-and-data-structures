@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
 
+using std::vector;
+
 template <typename T>
-void merge(std::vector<T>& v, int l, int r, int mid, std::vector<T>& aux) {
+void merge(vector<T>& v, int l, int r, int mid, vector<T>& aux) {
 	int i = l, j = mid + 1, k = l;
 	while (i <= mid && j <= r) {
 		if (v[i] <= v[j]) {  aux[k++] = v[i++];  }
@@ -17,7 +19,7 @@ void merge(std::vector<T>& v, int l, int r, int mid, std::vector<T>& aux) {
 }
 
 template <typename T>
-void mergeSortRecursive(std::vector<T>& v, int l, int r, std::vector<T>& aux) {
+void mergeSortRecursive(vector<T>& v, int l, int r, vector<T>& aux) {
 	if (l >= r) return;
 	int mid = l + (r - l) / 2;
 	mergeSortRecursive(v, l, mid, aux);
@@ -26,10 +28,10 @@ void mergeSortRecursive(std::vector<T>& v, int l, int r, std::vector<T>& aux) {
 }
 
 template <typename T>
-void sort(std::vector<T>& v) {
+void sort(vector<T>& v) {
 	if (v.empty())	return;
 	int l = 0, h = (int) v.size() - 1;
-	std::vector<T> aux(v.size());
+	vector<T> aux(v.size());
 	mergeSortRecursive(v, l, h, aux);
 }
 
