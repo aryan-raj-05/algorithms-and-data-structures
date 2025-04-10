@@ -1,0 +1,9 @@
+# C/C++
+*.exe
+*.out
+
+# Java
+*.class
+
+# VS Code
+/.vscode
