@@ -4,6 +4,10 @@
 #include <stdlib.h>
 
 typedef struct {
+    
+} vector;
+
+typedef struct {
     u_int32_t digits[16];
     int size;
 } BigInt;

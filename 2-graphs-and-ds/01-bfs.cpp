@@ -1,13 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <stack>
 
 using std::cerr;
 using std::cout;
 using std::vector;
 using std::queue;
-using std::stack;
 
 class Graph {
     vector<vector<int>> adjList;
