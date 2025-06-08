@@ -42,6 +42,43 @@ vector<int> dfs_recursive(Graph& g, int startVertex) {
     return result;
 }
 
-int main() {
+vector<int> dfs_iterative(Graph& g, int startVertex) {
+    vector<int> result;
+    vector<bool> visited(g.v, false);
+    stack<int> stk;
 
+    stk.push(startVertex);
+
+    while (!stk.empty()) {
+        int vertex = stk.top();
+        stk.pop();
+        if (!visited[vertex]) {
+            visited[vertex] = true;
+            result.push_back(vertex);
+            int size = g.adj_list[vertex].size();
+            for (int i = size - 1; i >= 0; i--) {
+                int node = g.adj_list[vertex][i];
+                if (!visited[node]) stk.push(node);
+            }
+        }
+    }
+    return result;
+}
+
+int main() {
+    Graph g(6, false);
+
+    g.join(0, 1);
+    g.join(0, 3);
+    g.join(1, 2);
+    g.join(3, 4);
+    g.join(2, 5);
+    g.join(4, 5);
+
+    
+    vector<int> result = dfs_iterative(g, 0);
+    for (int v : result) {
+        cout << v << ' ';
+    }
+    cout << endl;
 }
