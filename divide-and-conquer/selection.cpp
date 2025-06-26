@@ -47,14 +47,18 @@ template <typename T> int partition(vector<T>& v, int lo, int hi, std::mt19937& 
 
 template <typename T>
 T helperRselect(vector<T>& v, int ord, int lo, int hi, std::mt19937& gen) {
-    if (lo == hi)   return v[lo];
+    if (lo == hi) return v[lo];
 
     int pivotidx = partition(v, lo, hi, gen);
     int rank = pivotidx - lo + 1;
 
-    if (rank == ord)        {  return v[pivotidx];                                          } 
-    else if (rank > ord)    {  return helperRselect(v, ord, lo, pivotidx - 1, gen);         } 
-    else                    {  return helperRselect(v, ord - rank, pivotidx + 1, hi, gen);  }
+    if (rank == ord) {
+        return v[pivotidx];
+    } else if (rank > ord) {
+        return helperRselect(v, ord, lo, pivotidx - 1, gen);
+    } else {
+        return helperRselect(v, ord - rank, pivotidx + 1, hi, gen);
+    }
 }
 
 template <typename T>
