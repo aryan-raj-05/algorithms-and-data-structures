@@ -22,10 +22,7 @@ struct Graph {
     }
 };
 
-void dfs_recursive_helper (Graph& g,
-                           int startVertex,
-                           vector<bool>& visited,
-                           vector<int>& result) {
+void dfs_recursive_helper (Graph& g, int startVertex, vector<bool>& visited, vector<int>& result) {
     visited[startVertex] = true;
     result.push_back(startVertex);
     for (int connectedVertices : g.adj_list[startVertex]) {
