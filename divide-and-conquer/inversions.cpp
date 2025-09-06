@@ -1,7 +1,4 @@
-#include <iostream>
 #include <vector>
-#include <random>
-
 using std::vector;
 
 /*
@@ -58,8 +55,4 @@ int helperCountInv(vector<int>& A, vector<int>& aux, int lo, int hi) {
 int countInversionDnC(vector<int>& A) {
     vector<int> aux(A.size());
     return helperCountInv(A, aux, 0, A.size() - 1);
-}
-
-int main() {
-
 }

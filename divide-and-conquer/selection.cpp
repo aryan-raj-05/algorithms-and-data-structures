@@ -10,10 +10,8 @@
 */
 
 #include <algorithm>
-#include <iostream>
 #include <random>
 #include <vector>
-
 using std::vector;
 
 // ___First Method: Reduction to Sorting___
@@ -66,8 +64,4 @@ T Rselect(vector<T>& v, int ord) {
     std::random_device rd;
 	std::mt19937 gen(rd());
     return helperRselect(v, ord, 0, v.size() - 1, gen);
-}
-
-int main() {
-    
 }

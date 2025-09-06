@@ -1,6 +1,4 @@
-#include <iostream>
 #include <vector>
-
 using std::vector;
 
 template <typename T>
@@ -33,8 +31,4 @@ void sort(vector<T>& v) {
 	int l = 0, h = (int) v.size() - 1;
 	vector<T> aux(v.size());
 	mergeSortRecursive(v, l, h, aux);
-}
-
-int main() {
-	
 }

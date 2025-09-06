@@ -149,7 +149,3 @@ namespace strasn {
 		return res;
 	}
 }
-
-int main() {
-
-}

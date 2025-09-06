@@ -1,4 +1,3 @@
-#include <iostream>
 #include <random>
 #include <vector>
 
@@ -41,8 +40,4 @@ void sort(vector<T>& A) {
 	if (A.empty())	return;
 	int lo = 0, hi = (int) A.size() - 1;
 	QuickSort(A, lo, hi);
-}
-
-int main() {
-
 }
